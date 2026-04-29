@@ -3,25 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --primary: #2D5A27;
-  --secondary: #FFFBF5;
-  --accent: #FF9F43;
+  --primary: #fcfbf7;
+  --secondary: #2d4a3e;
+  --accent: #e67e22;
 }
 
-html {
-  scroll-behavior: smooth;
+html { scroll-behavior: smooth; }
+body { 
+  overflow-x: hidden; 
+  font-family: var(--font-body); 
+  background: var(--primary); 
+  color: #1a1a1a; 
 }
 
-body {
-  overflow-x: hidden;
-  font-family: var(--font-body);
-  background: var(--primary);
-  color: white;
-}
-
-h1, h2, h3, h4 {
-  font-family: var(--font-heading);
-}
+h1, h2, h3, h4 { font-family: var(--font-heading); }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
@@ -33,19 +28,14 @@ h1, h2, h3, h4 {
 .animate-slideUp { animation: slideUp 0.8s ease-out forwards; }
 .animate-scaleIn { animation: scaleIn 0.5s ease-out forwards; }
 .animate-float { animation: float 6s ease-in-out infinite; }
-.animate-slide-left { animation: slide-left 40s linear infinite; }
+.animate-slide-left { animation: slide-left 50s linear infinite; }
+
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
 
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
 }

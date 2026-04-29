@@ -3,82 +3,56 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { 
-  Leaf, 
-  Package, 
   ChefHat, 
-  Users, 
+  Leaf, 
   Utensils, 
-  Flame, 
+  Zap, 
+  Heart, 
+  BookOpen, 
+  MapPin, 
   Instagram, 
   Mail, 
-  MapPin, 
   Phone, 
-  Menu, 
-  X, 
   ArrowRight, 
   CheckCheck, 
   Loader2, 
-  ImageOff 
+  ImageOff, 
+  Menu, 
+  X 
 } from 'lucide-react';
 
 // DESIGN DECISIONS:
 // Layout Energy: editorial
 // Depth Treatment: layered
-// Divider Style: D-STAT
+// Divider Style: D-QUOTE
 // Typography Personality: refined
 
 const brand = {
   name: "Somy’s Cuisine",
-  tagline: "Deluxe & Tasty Nigerian Meals",
-  description: "Authentic, freshly made local delicacies crafted for the discerning palate, from intimate dinners to grand event catering in the heart of Lagos.",
+  tagline: "The Art of Gourmet Grazing",
+  description: "Where Lagos soul meets atelier precision. We craft freshly made local delicacies, luxury food trays, and bespoke event catering for the gourmet lifestyle.",
   industry: "food",
-  region: "nigeria",
+  region: "Nigeria",
   currency: "₦"
 };
 
 const IMAGES = {
-  hero: "https://picsum.photos/seed/food0/1920/1080",
+  hero: "https://images.unsplash.com/photo-1547132717-0cd6145a2e6b?q=80&w=2000",
   products: [
-    "https://picsum.photos/seed/food2/800/1000",
-    "https://picsum.photos/seed/food3/800/1000",
-    "https://picsum.photos/seed/food4/800/1000",
-    "https://picsum.photos/seed/food5/800/1000"
+    "https://images.unsplash.com/photo-1629567971562-a5242697c783?q=80&w=1000",
+    "https://images.unsplash.com/photo-1629567971554-0cc0883dd57b?q=80&w=1000",
+    "https://images.unsplash.com/photo-1625108958889-05b6e220ea25?q=80&w=1000",
+    "https://images.unsplash.com/photo-1641424013712-c5c8e4f56be2?q=80&w=1000"
   ],
   gallery: [
-    "https://picsum.photos/seed/food6/600/800",
-    "https://picsum.photos/seed/food7/600/600",
-    "https://picsum.photos/seed/food8/800/600",
-    "https://picsum.photos/seed/food9/600/800",
-    "https://picsum.photos/seed/food10/600/600",
-    "https://picsum.photos/seed/food11/800/600"
+    "https://images.unsplash.com/photo-1685270066037-db1f16d02e06?q=80&w=800",
+    "https://images.unsplash.com/photo-1686752164889-c2123d4776ab?q=80&w=800",
+    "https://images.unsplash.com/photo-1612974443138-a2c494d78dfb?q=80&w=800",
+    "https://images.unsplash.com/photo-1740597205032-c6439723d5bf?q=80&w=800",
+    "https://images.unsplash.com/photo-1772985206892-7a922fc5f6a3?q=80&w=800",
+    "https://images.unsplash.com/photo-1739323981235-83bb0815df58?q=80&w=800"
   ]
 };
-
-const products = [
-  { name: "The Deluxe Party Tray", description: "A lavish spread of Jollof rice, fried plantains, and assorted proteins for group celebrations.", price: "₦85,000" },
-  { name: "Family Size Soup Bowl", description: "Authentic Nigerian soups prepared with premium proteins and fresh local herbs.", price: "₦45,000" },
-  { name: "Executive Lunch Pack", description: "Portioned perfection for the busy professional, featuring our signature local sides.", price: "₦22,500" },
-  { name: "Ultimate Event Spread", description: "Comprehensive catering for weddings and corporate gatherings with a full menu variety.", price: "₦195,000" }
-];
-
-const features = [
-  { title: "Freshly Prepared", description: "Every meal is cooked to order using the finest market-fresh ingredients.", icon: Leaf },
-  { title: "Bulk Food Packs", description: "Convenient meal prepping made easy with our specialized bowl and tray options.", icon: Package },
-  { title: "Event Excellence", description: "Elevate your celebrations with our premium catering and professional service.", icon: ChefHat }
-];
-
-const testimonials = [
-  { name: "Adeola Balogun", text: "The Jollof tray was the highlight of our party. Every guest asked for the caterer's contact!", role: "Event Planner" },
-  { name: "Chiamaka Okafor", text: "The convenience of the bulk food packs has changed my work week. Delicious and healthy.", role: "Corporate Professional" }
-];
-
-const stats = [
-  { number: "3.9k", label: "Instagram Community", icon: Users },
-  { number: "50+", label: "Recipe Varieties", icon: Utensils },
-  { number: "100%", label: "Natural Spices", icon: Flame }
-];
-
-// --- Hooks & Components ---
 
 const useScrollReveal = (threshold = 0.15) => {
   const ref = useRef<HTMLElement>(null);
@@ -94,15 +68,12 @@ const useScrollReveal = (threshold = 0.15) => {
   return { ref, isVisible };
 };
 
-function SafeImage({ src, alt, fill, width, height, className, priority }: {
-  src: string; alt: string; fill?: boolean; width?: number; height?: number;
-  className?: string; priority?: boolean;
-}) {
+function SafeImage({ src, alt, fill, width, height, className, priority }: any) {
   const [error, setError] = useState(false);
   if (error) {
     return (
-      <div className={`flex items-center justify-center bg-zinc-900 ${className}`}>
-        <ImageOff size={24} className="text-white/20" />
+      <div className={`flex items-center justify-center bg-zinc-100 ${className}`}>
+        <ImageOff size={24} className="text-zinc-300" />
       </div>
     );
   }
@@ -110,11 +81,11 @@ function SafeImage({ src, alt, fill, width, height, className, priority }: {
     <Image 
       src={src} 
       alt={alt} 
-      fill={fill}
-      width={!fill ? (width ?? 800) : undefined}
-      height={!fill ? (height ?? 600) : undefined}
+      fill={fill} 
+      width={!fill ? (width ?? 800) : undefined} 
+      height={!fill ? (height ?? 600) : undefined} 
       className={className} 
-      priority={priority}
+      priority={priority} 
       onError={() => setError(true)} 
     />
   );
@@ -122,337 +93,340 @@ function SafeImage({ src, alt, fill, width, height, className, priority }: {
 
 export default function Page() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
-  
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Section Refs
-  const revealFeatures = useScrollReveal();
-  const revealProducts = useScrollReveal();
-  const revealAbout = useScrollReveal();
-  const revealTestimonials = useScrollReveal();
-  const revealContact = useScrollReveal();
-  const revealGallery = useScrollReveal();
-
   return (
     <main className="relative">
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 ${
-        scrolled ? 'bg-[var(--primary)]/95 backdrop-blur-xl shadow-2xl py-3' : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <a href="#hero" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[var(--accent)] rounded-lg flex items-center justify-center font-heading font-black text-black text-xl">
-              SC
-            </div>
-            <span className="font-heading text-2xl font-bold tracking-tight text-white">Somy’s</span>
-          </a>
-
-          <div className="hidden md:flex items-center gap-10">
-            {['Home', 'The Menu', 'Gallery'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="text-sm font-medium text-white/70 hover:text-[var(--accent)] transition-colors">
-                {item}
-              </a>
-            ))}
-            <a href="#contact" className="bg-[var(--accent)] text-black px-6 py-2.5 rounded-full font-bold text-sm hover:brightness-110 transition-all shadow-lg shadow-[var(--accent)]/20">
-              Order Now
-            </a>
-          </div>
-
-          <button className="md:hidden text-white" onClick={() => setMobileMenu(true)}>
-            <Menu size={28} />
-          </button>
+      {/* HEADER */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 md:px-12 py-5 flex items-center justify-between ${scrolled ? 'bg-primary/90 backdrop-blur-xl shadow-sm' : 'bg-transparent'}`}>
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 bg-secondary flex items-center justify-center text-primary font-heading font-bold text-xl">S</div>
+          <span className={`font-heading text-xl font-bold tracking-tight ${scrolled ? 'text-secondary' : 'text-white'}`}>SOMY’S</span>
         </div>
+        
+        <div className="hidden md:flex items-center gap-10">
+          {['Atelier', 'Collections', 'Gallery', 'Inquiry'].map((link, i) => (
+            <a key={i} href={`#${link.toLowerCase()}`} className={`text-sm font-medium tracking-widest uppercase transition-colors hover:text-accent ${scrolled ? 'text-secondary/70' : 'text-white/80'}`}>
+              {link}
+            </a>
+          ))}
+          <a href="#contact" className="bg-accent text-white px-6 py-2.5 text-sm font-bold tracking-wide uppercase hover:brightness-110 transition-all">
+            Order Now
+          </a>
+        </div>
+
+        <button className="md:hidden text-accent" onClick={() => setMobileNavOpen(true)}>
+          <Menu size={28} />
+        </button>
       </nav>
 
-      {/* Mobile Menu */}
-      <div className={`fixed inset-0 z-[200] bg-[var(--primary)] transition-transform duration-500 transform ${mobileMenu ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="p-8">
-          <div className="flex justify-between items-center mb-16">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[var(--accent)] rounded-lg flex items-center justify-center font-heading font-black text-black text-xl">SC</div>
-              <span className="font-heading text-2xl font-bold text-white">Somy’s</span>
-            </div>
-            <button onClick={() => setMobileMenu(false)} className="text-white"><X size={32} /></button>
-          </div>
-          <div className="flex flex-col gap-8">
-            {['Home', 'The Menu', 'Gallery', 'Order Now'].map((item) => (
-              <a 
-                key={item} 
-                href={`#${item.toLowerCase().replace(' ', '-')}`} 
-                onClick={() => setMobileMenu(false)}
-                className="text-4xl font-heading font-bold text-white hover:text-[var(--accent)] transition-colors"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
+      {/* MOBILE NAV */}
+      <div className={`fixed inset-0 z-[100] bg-secondary transition-transform duration-500 ${mobileNavOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <button className="absolute top-6 right-6 text-primary" onClick={() => setMobileNavOpen(false)}>
+          <X size={32} />
+        </button>
+        <div className="flex flex-col items-center justify-center h-full gap-8">
+          {['Atelier', 'Collections', 'Gallery', 'Inquiry'].map((link, i) => (
+            <a key={i} href={`#${link.toLowerCase()}`} onClick={() => setMobileNavOpen(false)} className="font-heading text-4xl text-primary font-bold">
+              {link}
+            </a>
+          ))}
+          <a href="#contact" onClick={() => setMobileNavOpen(false)} className="mt-8 bg-accent text-white px-10 py-4 font-bold text-xl uppercase">
+            Order Now
+          </a>
         </div>
       </div>
 
-      {/* Hero Section (HR-B) */}
-      <section id="home" className="min-h-screen relative flex items-end pb-32 px-6 md:px-16 overflow-hidden">
+      {/* HERO - Pattern HR-B */}
+      <section id="atelier" className="min-h-screen relative flex items-end pb-32 px-6 md:px-20 overflow-hidden">
         <SafeImage src={IMAGES.hero} alt={brand.name} fill className="object-cover" priority />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)] via-[var(--primary)]/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)]/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary/50 to-transparent" />
         
         <div className="relative z-10 max-w-4xl animate-slideUp">
-          <h1 className="font-heading text-6xl md:text-9xl font-black text-white leading-[0.85] tracking-tighter mb-8">
-            Experience the <br/>Art of Gastronomy
+          <h1 className="font-heading text-7xl md:text-[8rem] font-bold text-white leading-[0.85] tracking-tighter">
+            A Grazing Atelier
           </h1>
-          <p className="text-white/70 text-xl md:text-2xl max-w-2xl leading-relaxed mb-12">
-            Freshly made local meals and deluxe food trays delivered across Lagos. Where luxury meets local flavor.
+          <p className="text-white/70 mt-8 text-xl max-w-xl leading-relaxed font-light">
+            {brand.description}
           </p>
-          <div className="flex flex-wrap gap-6">
-            <a href="#products" className="bg-[var(--accent)] text-black px-10 py-5 rounded-full font-black text-lg hover:scale-105 transition-all shadow-xl shadow-[var(--accent)]/30">
-              Explore the Menu
+          <div className="flex flex-wrap gap-6 mt-12">
+            <a href="#collections" className="bg-accent text-white px-10 py-5 font-bold text-lg hover:bg-white hover:text-secondary transition-all duration-300">
+              Explore the Collection
             </a>
-            <a href="#about" className="backdrop-blur-md bg-white/10 border border-white/20 text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-black transition-all">
-              Our Story
+            <a href="#inquiry" className="border border-white/30 text-white px-10 py-5 font-medium text-lg hover:bg-white/10 transition-all duration-300">
+              Our Process
             </a>
           </div>
         </div>
       </section>
 
-      {/* Features Section (F-NUMBERED) */}
-      <section id="features" ref={revealFeatures.ref} className="py-28 px-6 bg-[var(--primary)]">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-20">
-            <h2 className="font-heading text-5xl md:text-7xl font-black text-white mb-6">Why Choose Somy’s</h2>
-            <p className="text-[var(--accent)] font-mono text-sm tracking-[0.3em] uppercase">Sharp delivery across Lagos</p>
-          </div>
-          <div className="divide-y divide-white/10">
-            {features.map((f, i) => (
-              <div key={i} className={`py-14 flex flex-col md:flex-row items-start gap-12 transition-all duration-1000 ${
-                revealFeatures.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-              }`} style={{ transitionDelay: `${i * 200}ms` }}>
-                <span className="font-mono text-[var(--accent)] text-5xl font-black tracking-tighter shrink-0 w-20">
-                  0{i + 1}
-                </span>
-                <div className="flex-1">
-                  <h3 className="font-heading text-3xl font-bold text-white mb-4">{f.title}</h3>
-                  <p className="text-white/50 text-xl leading-relaxed max-w-2xl">{f.description}</p>
-                </div>
-                <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center shrink-0 text-[var(--accent)]">
-                  <f.icon size={32} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Divider (D-STAT) */}
-      <div className="bg-[var(--accent)] py-16">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-center">
-          {stats.map((s, i) => (
-            <div key={i} className="px-8 py-8 md:py-4">
-              <p className="text-5xl font-black text-black tracking-tight mb-2">{s.number}</p>
-              <p className="text-black/60 text-sm font-bold uppercase tracking-widest">{s.label}</p>
-            </div>
-          ))}
-        </div>
+      {/* DIVIDER - D-QUOTE */}
+      <div className="py-32 px-8 text-center bg-secondary/5 border-y border-secondary/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent)/5,transparent_70%)]" />
+        <p className="relative font-heading text-4xl md:text-6xl font-medium text-secondary max-w-4xl mx-auto leading-tight italic">
+          &ldquo;We don’t just serve food; we curate edible masterpieces for the gourmet lifestyle.&rdquo;
+        </p>
+        <p className="relative text-secondary/40 mt-8 text-sm tracking-[0.4em] uppercase font-bold">The Somy Mandate</p>
       </div>
 
-      {/* Products Section (P-STAGGER) */}
-      <section id="the-menu" ref={revealProducts.ref} className="py-32 px-6 bg-[var(--secondary)] overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-24">
-            <h2 className="font-heading text-6xl md:text-8xl font-black text-[var(--primary)] leading-none mb-6">Our Signature Menus</h2>
-            <p className="text-[var(--primary)]/60 text-xl max-w-2xl mx-auto italic">From daily lunch packs to celebration trays, we serve excellence on every plate.</p>
-          </div>
-          
-          <div className="space-y-32">
-            {products.map((p, i) => (
-              <div key={i} className={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-16 md:gap-24 transition-all duration-1000 ${
-                revealProducts.isVisible ? 'opacity-100 translate-x-0' : i % 2 === 0 ? 'opacity-0 -translate-x-20' : 'opacity-0 translate-x-20'
-              }`}>
-                <div className="w-full md:w-1/2 relative group">
-                  <div className="aspect-[4/5] relative rounded-[2rem] overflow-hidden shadow-2xl">
-                    <SafeImage src={IMAGES.products[i]} alt={p.name} fill className="object-cover group-hover:scale-110 transition-transform duration-1000" />
-                  </div>
-                  <div className={`absolute -bottom-10 ${i % 2 === 0 ? '-right-10' : '-left-10'} w-2/3 h-2/3 bg-[var(--primary)]/5 rounded-full blur-3xl -z-10`} />
-                </div>
-                <div className={`w-full md:w-1/2 ${i % 2 === 0 ? 'text-left' : 'md:text-right'}`}>
-                  <span className="font-mono text-[var(--accent)] text-xs font-bold tracking-[0.4em] uppercase mb-6 block">Premium Selection 0{i + 1}</span>
-                  <h3 className="font-heading text-5xl font-bold text-[var(--primary)] mb-6 leading-tight">{p.name}</h3>
-                  <p className="text-[var(--primary)]/70 text-lg leading-relaxed mb-10 max-w-lg mx-auto md:mx-0">{p.description}</p>
-                  <div className={`flex flex-col gap-8 ${i % 2 === 0 ? 'items-start' : 'items-start md:items-end'}`}>
-                    <span className="text-4xl font-black text-[var(--primary)]">{p.price}</span>
-                    <a href="#contact" className="bg-[var(--primary)] text-white px-12 py-4 rounded-full font-bold hover:bg-[var(--accent)] hover:text-black transition-all">
-                      Place Order
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* FEATURES - Pattern F-BENTO */}
+      <Features />
 
-      {/* Gallery Section (Masonry) */}
-      <section id="gallery" ref={revealGallery.ref} className="py-28 px-6 bg-[var(--primary)]">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <div>
-              <h2 className="font-heading text-5xl md:text-7xl font-black text-white">The Variety Gallery</h2>
-              <p className="text-white/50 text-xl mt-4">A visual feast of our recent culinary creations</p>
+      {/* ABOUT - Pattern V3 (Split) */}
+      <AboutSection />
+
+      {/* PRODUCTS - Pattern P-EDITORIAL */}
+      <Collections />
+
+      {/* GALLERY - Masonry */}
+      <GallerySection />
+
+      {/* TESTIMONIALS - T-SLIDER */}
+      <Testimonials />
+
+      {/* CONTACT - C3 */}
+      <ContactSection />
+
+      {/* FOOTER */}
+      <footer className="bg-secondary text-primary py-20 px-6 md:px-20 border-t border-white/5">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2 mb-8">
+              <div className="w-12 h-12 bg-accent flex items-center justify-center text-white font-heading font-bold text-2xl">S</div>
+              <span className="font-heading text-3xl font-bold tracking-tight">SOMY’S CUISINE</span>
             </div>
-            <a href="https://instagram.com/somy_cuisine" target="_blank" className="flex items-center gap-3 text-[var(--accent)] font-bold text-lg hover:translate-x-2 transition-transform">
-              View Instagram <Instagram size={24} />
-            </a>
-          </div>
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-            {IMAGES.gallery.map((src, i) => (
-              <div key={i} className={`break-inside-avoid group relative rounded-3xl overflow-hidden shadow-xl transition-all duration-700 ${
-                revealGallery.isVisible ? 'scale-100 opacity-100' : 'scale-90 opacity-0'
-              }`} style={{ transitionDelay: `${i * 100}ms` }}>
-                <SafeImage src={src} alt={`Gallery ${i + 1}`} width={600} height={800} className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" ref={revealAbout.ref} className="py-32 px-6 bg-[var(--secondary)] overflow-hidden">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
-          <div className={`transition-all duration-1000 ${revealAbout.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}>
-            <h2 className="font-heading text-6xl font-black text-[var(--primary)] mb-8">Our Culinary Journey</h2>
-            <div className="space-y-6 text-xl text-[var(--primary)]/70 leading-relaxed">
-              <p>At Somy’s Cuisine, we believe that Nigerian meals deserve a premium stage. We combine traditional recipes with modern presentation to provide an unmatched dining experience for families and corporations alike.</p>
-              <p>Based in the heart of Lagos, we are dedicated to sourcing the freshest local ingredients to ensure that every bowl and tray we deliver is a testament to the richness of our heritage.</p>
-            </div>
-            <div className="mt-12 flex flex-wrap gap-8">
-              {stats.map((s, i) => (
-                <div key={i} className={`transition-all duration-1000 ${revealAbout.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: `${i * 150}ms` }}>
-                  <p className="font-heading text-4xl font-black text-[var(--accent)]">{s.number}</p>
-                  <p className="text-[var(--primary)]/60 text-xs font-bold uppercase tracking-widest mt-1">{s.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className={`relative transition-all duration-1000 delay-300 ${revealAbout.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
-            <div className="aspect-square relative rounded-[3rem] overflow-hidden shadow-2xl z-10">
-              <SafeImage src="https://picsum.photos/seed/catering/800/800" alt="About Somys Cuisine" fill className="object-cover" />
-            </div>
-            <div className="absolute -top-10 -right-10 w-64 h-64 border-2 border-[var(--accent)] rounded-[3rem] -z-0" />
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[var(--accent)]/10 rounded-[2rem] -z-0" />
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials (T-SPOTLIGHT) */}
-      <section ref={revealTestimonials.ref} className="py-32 px-6 bg-[var(--primary)]">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-heading text-5xl md:text-7xl font-black text-white mb-20">What Our Clients Say</h2>
-          <div className="space-y-12">
-            {testimonials.map((t, i) => (
-              <div key={i} className={`relative py-14 px-10 rounded-[2.5rem] border border-white/5 bg-white/5 hover:border-[var(--accent)]/20 transition-all duration-700 ${
-                revealTestimonials.isVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-6 blur-sm'
-              }`} style={{ transitionDelay: `${i * 200}ms` }}>
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-[var(--accent)] flex items-center justify-center shadow-xl">
-                  <span className="text-black text-4xl font-black leading-none mt-4">&ldquo;</span>
-                </div>
-                <p className="text-white/80 text-2xl md:text-3xl font-heading italic leading-relaxed mb-10">&ldquo;{t.text}&rdquo;</p>
-                <div className="flex items-center justify-center gap-5">
-                  <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center text-[var(--accent)] font-black text-2xl border border-white/10">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div className="text-left">
-                    <p className="font-bold text-white text-lg">{t.name}</p>
-                    <p className="text-[var(--accent)] text-sm font-mono tracking-widest uppercase">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section (C3 Minimal Centered) */}
-      <section id="contact" ref={revealContact.ref} className="py-32 px-6 bg-[var(--secondary)]">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-[var(--accent)] font-mono text-sm font-bold tracking-[0.5em] uppercase mb-6">Reservation</p>
-          <h2 className="font-heading text-6xl md:text-8xl font-black text-[var(--primary)] mb-8">Place Your Order</h2>
-          <p className="text-[var(--primary)]/60 text-xl leading-relaxed mb-16">
-            Ready for a deluxe taste of Nigeria? Fill out the form below or reach out directly to coordinate your delivery or event catering.
-          </p>
-          
-          <ContactForm />
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-[var(--primary)] pt-24 pb-12 px-6 border-t border-white/5">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
-          <div className="lg:col-span-1">
-            <a href="#" className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-[var(--accent)] rounded-lg flex items-center justify-center font-heading font-black text-black text-xl">SC</div>
-              <span className="font-heading text-2xl font-bold text-white">Somy’s Cuisine</span>
-            </a>
-            <p className="text-white/50 leading-relaxed mb-8">Deluxe Nigerian Gastronomy for the discerning palate.</p>
-            <div className="flex gap-4">
-              <a href="https://instagram.com/somy_cuisine" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:bg-[var(--accent)] hover:text-black transition-all">
+            <p className="text-primary/60 max-w-md leading-relaxed text-lg">
+              Crafting premium culinary experiences across Lagos. Our atelier approach ensures every detail of your grazing experience is meticulously handled.
+            </p>
+            <div className="mt-10 flex gap-6">
+              <a href="https://wa.me/message/FXHJQ5VUEFEJJ1" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-accent transition-all">
+                <Phone size={20} />
+              </a>
+              <a href="https://instagram.com/@somy_cuisine" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-accent transition-all">
                 <Instagram size={20} />
               </a>
-              <a href="mailto:somyscuisine@gmail.com" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:bg-[var(--accent)] hover:text-black transition-all">
-                <Mail size={20} />
-              </a>
             </div>
           </div>
           
           <div>
-            <h4 className="font-heading text-xl font-bold text-white mb-8">Quick Links</h4>
-            <ul className="space-y-4">
-              {['Home', 'The Menu', 'Gallery', 'Order Now'].map(link => (
-                <li key={link}>
-                  <a href={`#${link.toLowerCase().replace(' ', '-')}`} className="text-white/50 hover:text-[var(--accent)] transition-colors">{link}</a>
-                </li>
-              ))}
+            <h4 className="font-heading text-xl font-bold mb-8 uppercase tracking-widest text-accent">Atelier</h4>
+            <ul className="space-y-4 text-primary/70">
+              <li><a href="#atelier" className="hover:text-white transition">The Studio</a></li>
+              <li><a href="#collections" className="hover:text-white transition">Menu Collections</a></li>
+              <li><a href="#gallery" className="hover:text-white transition">Visual Feast</a></li>
+              <li><a href="#contact" className="hover:text-white transition">Book Experience</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-heading text-xl font-bold text-white mb-8">Contact Info</h4>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-white/50">
-                <MapPin size={18} className="text-[var(--accent)]" /> Lagos, Nigeria
-              </li>
-              <li className="flex items-center gap-3 text-white/50">
-                <Phone size={18} className="text-[var(--accent)]" /> {brand.region === 'nigeria' ? '+234 ' : ''}wa.me/message/FXHJQ5VUEFEJJ1
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-heading text-xl font-bold text-white mb-8">Operating Hours</h4>
-            <ul className="space-y-2 text-white/50">
-              <li>Mon - Fri: 9:00 AM - 7:00 PM</li>
-              <li>Sat: 10:00 AM - 4:00 PM</li>
-              <li>Sun: Events Only</li>
-            </ul>
+            <h4 className="font-heading text-xl font-bold mb-8 uppercase tracking-widest text-accent">Studio Info</h4>
+            <div className="space-y-4 text-primary/70 text-sm">
+              <p className="flex items-start gap-3">
+                <MapPin size={18} className="shrink-0 text-accent" />
+                Lagos, Nigeria
+              </p>
+              <p className="flex items-center gap-3">
+                <Instagram size={18} className="shrink-0 text-accent" />
+                @somy_cuisine
+              </p>
+              <p className="mt-10 pt-10 border-t border-white/10 italic">
+                Sharp delivery, nationwide.
+              </p>
+            </div>
           </div>
         </div>
-        
-        <div className="max-w-7xl mx-auto pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-white/30 text-sm">
+        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-primary/40 text-xs tracking-widest uppercase font-bold">
           <p>© {new Date().getFullYear()} Somy’s Cuisine. All rights reserved.</p>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-white">Privacy Policy</a>
-            <a href="#" className="hover:text-white">Terms of Service</a>
-          </div>
+          <p>The Gourmet Lifestyle</p>
         </div>
       </footer>
     </main>
   );
 }
 
-function ContactForm() {
+function Features() {
+  const { ref, isVisible } = useScrollReveal();
+  const features = [
+    { title: "Chef-Led Curation", description: "Every meal is treated as a bespoke project in our culinary atelier.", icon: <ChefHat size={32} /> },
+    { title: "Freshly Sourced", description: "We prioritize organic, local ingredients for that authentic Lagos flavor profile.", icon: <Leaf size={32} /> },
+    { title: "Gourmet Logistics", description: "Punctual delivery in temperature-controlled packaging to maintain freshness.", icon: <Zap size={32} /> },
+    { title: "Custom Menus", description: "Tailored meal packs and tray varieties to suit your specific dietary desires.", icon: <Utensils size={32} /> }
+  ];
+
+  return (
+    <section ref={ref} className="py-32 px-6 bg-white">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 bg-secondary rounded-3xl p-12 text-primary flex flex-col justify-between group transition-all duration-700 min-h-[400px]">
+            <div>
+              <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center mb-10 text-white">
+                {features[0].icon}
+              </div>
+              <h3 className="font-heading text-5xl font-bold leading-tight max-w-md">{features[0].title}</h3>
+            </div>
+            <p className="text-primary/60 text-xl max-w-sm mt-8">{features[0].description}</p>
+          </div>
+
+          <div className="space-y-6">
+            {features.slice(1).map((f, i) => (
+              <div key={i} className="bg-primary border border-secondary/5 rounded-3xl p-8 hover:border-accent/30 transition-all duration-300 group h-full">
+                <div className="text-accent mb-6 group-hover:scale-110 transition-transform">{f.icon}</div>
+                <h3 className="font-heading text-2xl font-bold text-secondary mb-3">{f.title}</h3>
+                <p className="text-secondary/50 text-sm leading-relaxed">{f.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AboutSection() {
+  const { ref, isVisible } = useScrollReveal();
+  const stats = [
+    { number: "3.9k", label: "Gourmet Followers" },
+    { number: "50+", label: "Menu Varieties" },
+    { number: "12", label: "Lagos Districts" }
+  ];
+
+  return (
+    <section id="inquiry" ref={ref} className="py-32 px-6 bg-primary overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
+        <div className={`w-full md:w-1/2 relative transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}>
+          <div className="aspect-square relative rounded-[4rem] overflow-hidden shadow-2xl">
+            <SafeImage src={IMAGES.gallery[0]} alt="Atelier Story" fill className="object-cover" />
+          </div>
+          <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-accent/10 rounded-full blur-3xl -z-10" />
+        </div>
+        
+        <div className={`w-full md:w-1/2 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
+          <p className="text-accent font-bold tracking-[0.3em] uppercase text-xs mb-6">The Atelier Story</p>
+          <h2 className="font-heading text-6xl font-bold text-secondary mb-8 leading-[1.1]">The Art of <br/> Gourmet Living</h2>
+          <p className="text-secondary/70 text-xl leading-relaxed mb-12">
+            At Somy’s Cuisine, we believe food is more than sustenance; it is a lifestyle. Our Grazing Atelier approach ensures that every bowl, pack, and tray is a masterpiece of flavor and presentation.
+          </p>
+          
+          <div className="grid grid-cols-3 gap-8 pt-10 border-t border-secondary/10">
+            {stats.map((s, i) => (
+              <div key={i} className={`transition-all duration-1000`} style={{ transitionDelay: `${i * 200}ms` }}>
+                <p className="font-heading text-4xl font-bold text-accent">{s.number}</p>
+                <p className="text-secondary/40 text-xs uppercase tracking-widest font-bold mt-2">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Collections() {
+  const products = [
+    { name: "The Signature Atelier Bowl", description: "A curated individual serving of our most requested local delicacies.", price: "₦25,000", img: IMAGES.products[0] },
+    { name: "Executive Lunch Pack", description: "Bulk office catering designed for high-performance teams.", price: "₦65,000", img: IMAGES.products[1] },
+    { name: "Celebration Grazing Tray", description: "An opulent variety of finger foods, local proteins, and sides.", price: "₦120,000", img: IMAGES.products[2] },
+    { name: "Atelier Grand Buffet", description: "Premium event catering for luxury gatherings and boutique celebrations.", price: "₦195,000", img: IMAGES.products[3] }
+  ];
+
+  return (
+    <section id="collections" className="py-32 px-6 bg-secondary">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+          <div>
+            <h2 className="font-heading text-6xl text-primary font-bold mb-6">Our Culinary <br/> Collections</h2>
+            <p className="text-primary/40 text-lg max-w-md">Signature masterpieces from our studio, designed for the discerning palate.</p>
+          </div>
+          <a href="#contact" className="text-accent font-bold tracking-widest uppercase border-b-2 border-accent pb-2 hover:text-white hover:border-white transition-all">
+            Custom Commissions →
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {products.map((p, i) => (
+            <div key={i} className="group relative h-[450px] rounded-[3rem] overflow-hidden">
+              <SafeImage src={p.img} alt={p.name} fill className="object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-10 z-10">
+                <h3 className="text-4xl font-heading font-bold text-white mb-4">{p.name}</h3>
+                <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-500">
+                  <p className="text-white/60 text-sm mb-6 max-w-xs">{p.description}</p>
+                </div>
+                <div className="flex justify-between items-center pt-4 border-t border-white/10">
+                  <span className="text-accent font-bold text-2xl">{p.price}</span>
+                  <a href="#contact" className="bg-white text-secondary px-8 py-3 rounded-full font-bold text-sm hover:bg-accent hover:text-white transition-all">
+                    Order
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function GallerySection() {
+  return (
+    <section id="gallery" className="py-32 px-6 bg-primary">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-center font-heading text-6xl font-bold text-secondary mb-20">The Visual Feast</h2>
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+          {IMAGES.gallery.map((src, i) => (
+            <div key={i} className="break-inside-avoid relative rounded-3xl overflow-hidden group">
+              <SafeImage src={src} alt={`Gallery ${i}`} className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-secondary/0 group-hover:bg-secondary/40 transition-all duration-500" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials() {
+  const items = [
+    { name: "Chidinma O.", text: "The Grazing Tray was the highlight of my housewarming. The flavors are so authentic yet refined.", role: "Lekki Resident" },
+    { name: "Tunde A.", text: "Somy's Lunch Packs have changed our office culture. Everyone looks forward to lunch now.", role: "Corporate Manager" },
+    { name: "Amara E.", text: "Best jollof tray in Lagos. Period. The presentation is truly 'gourmet lifestyle'.", role: "Event Planner" }
+  ];
+
+  return (
+    <section className="py-32 bg-secondary overflow-hidden">
+      <div className="w-full overflow-hidden">
+        <div className="flex w-[200%] gap-8 animate-slide-left hover:[animation-play-state:paused]">
+          {[...items, ...items].map((t, i) => (
+            <div key={i} className="w-[450px] shrink-0 bg-white/5 border border-white/10 rounded-[3rem] p-12">
+              <div className="flex gap-1.5 mb-10">
+                {[1, 2, 3, 4, 5].map(n => <div key={n} className="w-2.5 h-2.5 rounded-full bg-accent" />)}
+              </div>
+              <p className="text-white/80 text-2xl font-heading italic leading-relaxed mb-10">&ldquo;{t.text}&rdquo;</p>
+              <div className="flex items-center gap-5 pt-8 border-t border-white/5">
+                <div className="w-14 h-14 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xl">
+                  {t.name.charAt(0)}
+                </div>
+                <div>
+                  <p className="font-bold text-white text-lg">{t.name}</p>
+                  <p className="text-white/30 text-xs uppercase tracking-widest">{t.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -463,63 +437,63 @@ function ContactForm() {
     setTimeout(() => { setLoading(false); setSent(true); }, 1500);
   };
 
-  if (sent) {
-    return (
-      <div className="flex flex-col items-center justify-center p-12 text-center animate-scaleIn bg-white rounded-3xl border border-[var(--primary)]/5 shadow-2xl relative overflow-hidden">
-        <div className="w-20 h-20 rounded-full bg-[var(--accent)]/20 flex items-center justify-center mb-6 border border-[var(--accent)]/40 relative z-10">
-          <CheckCheck size={32} className="text-[var(--accent)]" />
-        </div>
-        <h3 className="font-heading text-3xl font-black text-[var(--primary)] mb-3 relative z-10">Order Inquiry Received</h3>
-        <p className="text-[var(--primary)]/60 max-w-sm text-lg relative z-10">Your message has been sent. Our team will review your order details and contact you shortly.</p>
-        <button onClick={() => setSent(false)} className="mt-8 text-[var(--primary)] font-bold underline">Send another message</button>
-      </div>
-    );
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 text-left">
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <label className="text-[var(--primary)] font-bold text-sm uppercase tracking-widest ml-1">Full Name</label>
-          <input
-            type="text"
-            required
-            value={form.name}
-            onChange={e => setForm(prev => ({ ...prev, name: e.target.value }))}
-            className="w-full bg-white border border-[var(--primary)]/10 rounded-2xl px-6 py-4 text-[var(--primary)] placeholder-black/20 outline-none focus:border-[var(--accent)] transition-all"
-            placeholder="John Doe"
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="text-[var(--primary)] font-bold text-sm uppercase tracking-widest ml-1">WhatsApp/Phone</label>
-          <input
-            type="text"
-            required
-            value={form.phone}
-            onChange={e => setForm(prev => ({ ...prev, phone: e.target.value }))}
-            className="w-full bg-white border border-[var(--primary)]/10 rounded-2xl px-6 py-4 text-[var(--primary)] placeholder-black/20 outline-none focus:border-[var(--accent)] transition-all"
-            placeholder="+234..."
-          />
-        </div>
+    <section id="contact" className="py-32 px-6 bg-primary">
+      <div className="max-w-3xl mx-auto text-center">
+        <p className="text-accent font-bold tracking-[0.4em] uppercase text-xs mb-6">Experience Somy</p>
+        <h2 className="font-heading text-6xl font-bold text-secondary mb-8">Book Your Atelier Experience</h2>
+        <p className="text-secondary/50 mb-16 text-xl max-w-xl mx-auto">From intimate dinners to corporate lunches, let us curate your next milestone.</p>
+        
+        {sent ? (
+          <div className="bg-secondary rounded-[3rem] p-20 text-center animate-scaleIn">
+            <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center mx-auto mb-10 text-white">
+              <CheckCheck size={48} />
+            </div>
+            <h3 className="font-heading text-4xl font-bold text-white mb-4">Message Sent</h3>
+            <p className="text-white/60 text-lg">Thank you for your interest. We will contact you shortly to finalize your bespoke menu.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="text-left space-y-6 bg-white p-12 rounded-[3rem] shadow-xl border border-secondary/5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <input 
+                type="text" 
+                placeholder="Name" 
+                required 
+                className="w-full bg-primary border-none rounded-2xl px-6 py-5 text-secondary placeholder-secondary/30 focus:ring-2 focus:ring-accent outline-none transition-all"
+                onChange={e => setForm({...form, name: e.target.value})}
+              />
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                required 
+                className="w-full bg-primary border-none rounded-2xl px-6 py-5 text-secondary placeholder-secondary/30 focus:ring-2 focus:ring-accent outline-none transition-all"
+                onChange={e => setForm({...form, email: e.target.value})}
+              />
+            </div>
+            <input 
+              type="text" 
+              placeholder="WhatsApp Number" 
+              required 
+              className="w-full bg-primary border-none rounded-2xl px-6 py-5 text-secondary placeholder-secondary/30 focus:ring-2 focus:ring-accent outline-none transition-all"
+              onChange={e => setForm({...form, phone: e.target.value})}
+            />
+            <textarea 
+              rows={5} 
+              placeholder="Tell us about your event / desired platter..." 
+              required 
+              className="w-full bg-primary border-none rounded-2xl px-6 py-5 text-secondary placeholder-secondary/30 focus:ring-2 focus:ring-accent outline-none transition-all"
+              onChange={e => setForm({...form, message: e.target.value})}
+            />
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="w-full bg-secondary text-primary py-5 rounded-2xl font-bold text-xl hover:bg-accent transition-all duration-300 disabled:opacity-50 flex justify-center items-center gap-3"
+            >
+              {loading ? <Loader2 className="animate-spin" /> : <>Request a Quote <ArrowRight /></>}
+            </button>
+          </form>
+        )}
       </div>
-      <div className="space-y-2">
-        <label className="text-[var(--primary)] font-bold text-sm uppercase tracking-widest ml-1">Your Order / Inquiry</label>
-        <textarea
-          rows={5}
-          required
-          value={form.message}
-          onChange={e => setForm(prev => ({ ...prev, message: e.target.value }))}
-          className="w-full bg-white border border-[var(--primary)]/10 rounded-2xl px-6 py-4 text-[var(--primary)] placeholder-black/20 outline-none focus:border-[var(--accent)] transition-all resize-none"
-          placeholder="I would like to order the Deluxe Party Tray for Saturday..."
-        />
-      </div>
-      <button 
-        type="submit" 
-        disabled={loading}
-        className="w-full bg-[var(--primary)] text-white py-5 rounded-2xl font-black text-xl hover:bg-[var(--accent)] hover:text-black transition-all flex justify-center items-center gap-3 disabled:opacity-50"
-      >
-        {loading ? <Loader2 className="animate-spin" /> : <>Send Inquiry <ArrowRight size={20} /></>}
-      </button>
-    </form>
+    </section>
   );
 }
